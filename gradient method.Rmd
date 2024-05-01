@@ -1,0 +1,86 @@
+---
+title: "gradient method w/ fixed step size"
+output: pdf_document
+date: "2024-4-27"
+---
+```{r}
+library(pracma)
+```
+
+
+gradient method:
+minimize $f: \mathbb{R}^n -> \mathbb{R}$
+
+$x^{k+1} = x^k + \alpha^k d^k$
+
+where
+$d^k \in \mathbb{R}$ is a direction  
+
+$\alpha^k \geq 0$ is a step size
+
+descent direction:
+$\exists \bar \alpha \geq 0$ such that $f(x + \alpha d) < f(x) \qquad \forall \alpha \in [0,\bar \alpha]$  
+
+```{r}
+f1 <- function(x, y) {
+  a <- x[1]; b <- x[2]
+  a^2 + (1/2)*b^2 - a*b + a - 2
+}
+```
+
+```{r}
+f2 <- function(x, y) {
+  a <- x[1]; b <- x[2]
+  a^2 + b^2
+}
+
+```
+
+
+```{r}
+gradient_method <- function(f, x, y, a, error) {
+  x0 <- c(x, y)
+  d <- (-1 * grad(f, x0))
+  
+  #step size must be between 0 and 1 (strict)
+  
+  #first iteration
+  x1 <- x0 + (a*d)
+  # diff <- abs(f(x0) - f(x1))
+  b <- grad(f, x1)
+  diff <- sqrt((b[1]^2) + (b[2]^2))
+  
+  x0 <- c(x1[1], x1[2])
+  count <- 0
+
+
+  while ((diff >= error) & (count<=200)) {
+    count <- count+1
+
+    if (count == 200){
+      break
+    }
+
+    d <- (-1 * grad(f, x0)) # change step size
+    x1 <- x0 + (a*d)
+    b <- grad(f, x1)
+    diff <- sqrt((b[1]^2) + (b[2]^2))
+    x0 <- c(x1[1], x1[2])
+    #disp(x0)
+  }
+
+  if (count == 200){
+    cat("we stop lol")
+    stop()
+  }
+  else {
+    cat(x0)
+  }
+}
+  
+```
+
+```{r}
+gradient_method(f1, 0, 0, 1/2, 0.05)
+```
+
