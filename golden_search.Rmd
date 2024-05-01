@@ -1,0 +1,64 @@
+---
+title: "golden search"
+output: pdf_document
+date: "2024-04-22"
+---
+
+
+```{r}
+ratio<- (3-sqrt(5))/2
+alt_ratio<- 1 - ratio
+
+ratio
+alt_ratio
+```
+
+```{r}
+f1 <- function(x){
+  (x-1)^2 - 3
+}
+```
+
+```{r}
+f2 <- function(x){
+  x^3 + 2*(x^2) -5
+}
+```
+
+```{r}
+f3 <- function(x){
+  exp(x-2) + 2*(x^2) - 10
+}
+```
+
+```{r}
+golden_search<- function(f, a0, b0, delta){
+  while((b0-a0)>=delta){
+    a1=a0 + ratio * (b0-a0)
+    b1=a0 + alt_ratio * (b0-a0)
+    
+    if(f(a1) < f(b1)){
+      b0<-b1
+    }
+    
+    else{
+      a0<-a1
+    }
+  }
+  cat("interval is: [",a0, ",",b0, "]")
+}
+```
+
+```{r}
+golden_search(f1, 0, 4, 0.005)
+```
+
+```{r}
+golden_search(f2, -1, 5, 0.005)
+```
+
+```{r}
+golden_search(f3, -2, 2, 0.005)
+
+```
+
