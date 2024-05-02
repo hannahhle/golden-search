@@ -1,0 +1,38 @@
+---
+title: "newton method (pure)"
+output: pdf_document
+date: "2024-05-02"
+---
+
+min $f : \mathbb{R}^n \rightarrow \mathbb{R}$ over $\Omega = \mathbb{R}^n$\
+assumption: $f \in \mathbb{C}^2(\Omega)$\
+taylor approx of second degree around $x^k:$\
+$$q(x) = f(x^k) + \nabla f(x)^T(x - x^k) + \dfrac{1}{2}(x - x^k)^T \nabla^2f(x^k)(x - x^k)$$ stationary point of q: $$\nabla q(x) = \nabla f(x^k) + \nabla^2f(x^k) (x-x^k) = 0$$ $$\Longrightarrow x = x^k - (\nabla^2f(x^k))^{-1} \nabla f(x^k)$$
+
+pure newton method:\
+$x^{k+1} = x^k - (\nabla^2 f(x^k))^{-1} \nabla f(x^k)$
+
+where:\
+$d^k = [-\nabla^2f(x^k)]^{-1} \nabla f(x^k)$\
+$\alpha^k = 1$
+
+$\nabla q(x^k) = \nabla f(x^k)$\
+$\nabla^2 q(x^k) = \nabla^2 f(x^k)$
+
+
+```{r}
+library(pracma)
+```
+
+```{r}
+f1 <- function(x) {
+  a <- x[1]; b <- x[2]
+  (1\12)*(a^4) + (1\2)*(b-1)^2
+}
+```
+
+```{r}
+newton_pure <- function(x, y, )
+```
+
+```{r}
