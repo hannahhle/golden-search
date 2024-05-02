@@ -42,8 +42,6 @@ gradient_method <- function(f, x, y, a, error) {
   x0 <- c(x, y)
   d <- (-1 * grad(f, x0))
   
-  #step size must be between 0 and 1 (strict)
-  
   #first iteration
   x1 <- x0 + (a*d)
   # diff <- abs(f(x0) - f(x1))
