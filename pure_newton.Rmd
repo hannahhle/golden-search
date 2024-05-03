@@ -19,7 +19,6 @@ $\alpha^k = 1$
 $\nabla q(x^k) = \nabla f(x^k)$\
 $\nabla^2 q(x^k) = \nabla^2 f(x^k)$
 
-
 ```{r}
 library(pracma)
 ```
@@ -27,12 +26,47 @@ library(pracma)
 ```{r}
 f1 <- function(x) {
   a <- x[1]; b <- x[2]
-  (1\12)*(a^4) + (1\2)*(b-1)^2
+  (1/12)*(a^4) + (1/2)*(b-1)^2
 }
 ```
 
 ```{r}
-newton_pure <- function(x, y, )
+newton_pure <- function(f, x, y, tol) {
+  
+  x0 <- c(x,y)
+  g <- grad(f, x0) #take gradient of initial point
+  h <- hessian(f, x0) #hessian of initial point
+  invh <- inv(h) #invert hessian
+  
+  lol <- invh%*%g
+  count <- 0
+  
+  x1 <- x0 - lol
+  x0 <- c(x1[1], x1[2])
+  
+  while (count <= 1000) {
+    if (count == 1000) {
+      break
+    }
+    
+    g <- grad(f, x0) #take gradient of initial point
+    h <- hessian(f, x0) #hessian of initial point
+    invh <- inv(h) #invert hessian
+  
+    lol <- invh%*%g
+  
+    x1 <- x0 - lol
+    x0 <- c(x1[1], x1[2])
+    
+    #print(x0)
+  
+    count <- count + 1
+  }
+  
+  cat("point is ", x0)
+}
 ```
 
 ```{r}
+newton_pure(f1, 1, 0, 0.05)
+```
