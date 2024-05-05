@@ -6,3 +6,4 @@ included:
     - need to check if step size too small/big
 - pure newton
     - i havent figured out a stop condition yet lol
+    - need to add condition to check for singular matrices
